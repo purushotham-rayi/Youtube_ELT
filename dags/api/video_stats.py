@@ -117,7 +117,7 @@ def extract_video_data(video_ids):
 def save_to_json(extracted_data):
     # timestamp=datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     # The above line is useful if we are running directly in python. But with airflow it will default to UTC.  
-    timestamp=pendulum.now("America/Chicago").strftime("%Y-%m-%d_%H-%M-%S")
+    timestamp=pendulum.now("America/Chicago").strftime("%Y-%m-%d")
     file_path=f"./data/YT_data_{timestamp}.json"
 
     with open(file_path,"w", encoding="utf-8") as json_outfile:
