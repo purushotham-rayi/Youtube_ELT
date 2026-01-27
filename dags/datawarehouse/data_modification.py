@@ -38,27 +38,40 @@ def update_rows(cur,conn,schema,row):
             video_views='viewCount'
             likes_count='likeCount'
             comments_count='commentCount'
-        
+
+            cur.execute(
+                f"""
+                UPDATE {schema}.{table}
+                SET "Video_Title"=%({video_title})s,
+                    "Video_Views"=%({video_views})s,
+                    "Likes_Count"=%({likes_count})s,
+                    "Comments_Count"=%({comments_count})s
+                WHERE "Video_ID" = %({video_id})s AND "Upload_Date" = %({upload_date})s;
+                """, row
+            )
+
         # Core
         else:
-            video_id='video_ID'
+            video_id='Video_ID'
             video_title='Video_Title'
             upload_date='Upload_Date'
             # duration= 'Duration'
             video_views='Video_Views'
             likes_count='Likes_Count'
             comments_count='Comments_Count'
-        
-        cur.execute(
-            f"""
-            UPDATE {schema}.{table}
-            SET "Video_Title"=%({video_title})s,
-                "Video_Views"=%({video_views})s,
-                "Likes_Count"=%({likes_count})s,
-                "Comments_Count"=%({comments_count})s
-            WHERE "Video_ID" = %({video_id})s AND "Upload_Date" = %({upload_date})s;
-            """, row
-        )
+            Video_Type='Video_Type'
+
+            cur.execute(
+                f"""
+                UPDATE {schema}.{table}
+                SET "Video_Title"=%({video_title})s,
+                    "Video_Views"=%({video_views})s,
+                    "Likes_Count"=%({likes_count})s,
+                    "Video_Type"=%({Video_Type})s,
+                    "Comments_Count"=%({comments_count})s
+                WHERE "Video_ID" = %({video_id})s AND "Upload_Date" = %({upload_date})s;
+                """, row
+            )
 
         conn.commit()
         logger.info(f"Updated row with Video_ID: {row[video_id]}")
